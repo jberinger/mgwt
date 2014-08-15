@@ -35,6 +35,8 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.googlecode.mgwt.collection.shared.LightArrayInt;
 import com.googlecode.mgwt.dom.client.event.orientation.OrientationChangeEvent;
 import com.googlecode.mgwt.dom.client.event.orientation.OrientationChangeHandler;
+import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.carousel.CarouselAppearance.CarouselCss;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
