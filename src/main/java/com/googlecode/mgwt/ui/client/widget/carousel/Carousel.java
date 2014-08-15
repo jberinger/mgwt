@@ -59,7 +59,7 @@ import java.util.Set;
  */
 public class Carousel extends Composite implements HasWidgets, HasSelectionHandlers<Integer> {
 
-  private static class CarouselIndicatorContainer extends Composite {
+  private class CarouselIndicatorContainer extends Composite {
     private FlexPanel main;
     private final CarouselCss css;
     private ArrayList<CarouselIndicator> indicators;
@@ -89,6 +89,14 @@ public class Carousel extends Composite implements HasWidgets, HasSelectionHandl
         CarouselIndicator indicator = new CarouselIndicator(css);
         indicators.add(indicator);
         container.add(indicator);
+        final int index = i;
+        indicator.addTapHandler(new TapHandler() {
+            
+            @Override
+            public void onTap(TapEvent event) {
+                Carousel.this.setSelectedPage(index);
+            }
+        });
       }
 
       setSelectedIndex(selectedIndex);
