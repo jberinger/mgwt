@@ -27,13 +27,22 @@ import com.google.gwt.event.dom.client.TouchMoveHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
-
 import com.googlecode.mgwt.dom.client.event.mouse.HandlerRegistrationCollection;
 import com.googlecode.mgwt.dom.client.event.mouse.TouchEndToMouseUpHandler;
 import com.googlecode.mgwt.dom.client.event.mouse.TouchMoveToMouseMoveHandler;
 import com.googlecode.mgwt.dom.client.event.mouse.TouchStartToMouseDownHandler;
+import com.googlecode.mgwt.dom.client.event.pointer.MsPointerCancelEvent;
+import com.googlecode.mgwt.dom.client.event.pointer.MsPointerDownEvent;
+import com.googlecode.mgwt.dom.client.event.pointer.MsPointerMoveEvent;
+import com.googlecode.mgwt.dom.client.event.pointer.MsPointerUpEvent;
+import com.googlecode.mgwt.dom.client.event.pointer.TouchCancelToMsPointerCancelHandler;
+import com.googlecode.mgwt.dom.client.event.pointer.TouchEndToMsPointerUpHandler;
+import com.googlecode.mgwt.dom.client.event.pointer.TouchMoveToMsPointerMoveHandler;
+import com.googlecode.mgwt.dom.client.event.pointer.TouchStartToMsPointerDownHandler;
 import com.googlecode.mgwt.dom.client.event.touch.TouchHandler;
+import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.util.NoopHandlerRegistration;
 
 /**
@@ -76,16 +85,67 @@ public abstract class TouchWidgetImpl {
       return hrc;
     }
   }
+  
+  private static class TouchWidgetIE11Impl extends TouchWidgetImpl {
+
+    @Override
+    public HandlerRegistration addTouchStartHandler(Widget w, TouchStartHandler handler) {
+//      return w.addBitlessDomHandler(new TouchStartToMsPointerDownHandler(handler), MsPointerDownEvent.getType());
+      return w.addDomHandler(handler, TouchStartEvent.getType());
+    }
+
+    
+    
+    @Override
+    public HandlerRegistration addTouchMoveHandler(Widget w, TouchMoveHandler handler) {
+//      TouchMoveToMsPointerMoveHandler touchMoveToMsPointerMoveHandler = new TouchMoveToMsPointerMoveHandler(handler);
+//      HandlerRegistrationCollection handlerRegistrationCollection = new HandlerRegistrationCollection();
+//      handlerRegistrationCollection.addHandlerRegistration(w.addBitlessDomHandler(touchMoveToMsPointerMoveHandler, MsPointerDownEvent.getType()));
+//      handlerRegistrationCollection.addHandlerRegistration(w.addBitlessDomHandler(touchMoveToMsPointerMoveHandler, MsPointerUpEvent.getType()));
+//      handlerRegistrationCollection.addHandlerRegistration(w.addBitlessDomHandler(touchMoveToMsPointerMoveHandler, MsPointerMoveEvent.getType()));
+//      return handlerRegistrationCollection;
+////      return w.addBitlessDomHandler(new TouchMoveToMsPointerMoveHandler(handler), MsPointerMoveEvent.getType());
+      
+      return w.addDomHandler(handler, TouchMoveEvent.getType());
+    }
+
+    public HandlerRegistration addTouchCancelHandler(Widget w, TouchCancelHandler handler) {
+//      return w.addBitlessDomHandler(new TouchCancelToMsPointerCancelHandler(handler), MsPointerCancelEvent.getType());
+      return w.addDomHandler(handler, TouchCancelEvent.getType());
+    }
+    
+    @Override
+    public HandlerRegistration addTouchEndHandler(Widget w, TouchEndHandler handler) {
+//      return w.addBitlessDomHandler(new TouchEndToMsPointerUpHandler(handler), MsPointerUpEvent.getType());
+      return w.addDomHandler(handler, TouchEndEvent.getType());
+    }
+
+    @Override
+    public HandlerRegistration addTouchHandler(Widget w, TouchHandler handler) {
+      HandlerRegistrationCollection hrc = new HandlerRegistrationCollection();
+      hrc.addHandlerRegistration(addTouchStartHandler(w, handler));
+      hrc.addHandlerRegistration(addTouchMoveHandler(w, handler));
+      hrc.addHandlerRegistration(addTouchEndHandler(w, handler));
+      hrc.addHandlerRegistration(addTouchCancelHandler(w, handler));
+      return hrc;
+    }
+  }
 
   // Used with deffered binding
   @SuppressWarnings("unused")
   private static class TouchWidgetRuntimeImpl extends TouchWidgetImpl {
-    private static boolean hasTouchSupport;
+    private static boolean hasTouchOrPointerSupport;
+    private static boolean hasPointerSupport;
     private static TouchWidgetImpl delegate;
 
     static {
-      hasTouchSupport = hasTouch();
-      if (hasTouchSupport) {
+      hasPointerSupport = hasPointer();
+//      Window.alert("hasPointerSupport = "+hasPointerSupport);
+      hasTouchOrPointerSupport = hasTouch() || hasPointerSupport;
+      if (hasPointerSupport) {
+        delegate = new TouchWidgetIE11Impl();
+      } else 
+        if (hasTouchOrPointerSupport) {
         delegate = new TouchWidgetMobileImpl();
       }
     }
@@ -93,11 +153,15 @@ public abstract class TouchWidgetImpl {
     private static native boolean hasTouch() /*-{
       return 'ontouchstart' in $doc.documentElement;
     }-*/;
+    
+    private static native boolean hasPointer() /*-{
+      return $wnd.PointerEvent !== undefined && $wnd.PointerEvent !== null;
+    }-*/;
 
 
     @Override
     public HandlerRegistration addTouchStartHandler(Widget w, TouchStartHandler handler) {
-      if (hasTouchSupport) {
+      if (hasTouchOrPointerSupport) {
         return delegate.addTouchStartHandler(w, handler);
       }
       return w.addDomHandler(new TouchStartToMouseDownHandler(handler), MouseDownEvent.getType());
@@ -105,7 +169,7 @@ public abstract class TouchWidgetImpl {
 
     @Override
     public HandlerRegistration addTouchMoveHandler(Widget w, TouchMoveHandler handler) {
-      if (hasTouchSupport) {
+      if (hasTouchOrPointerSupport) {
         return delegate.addTouchMoveHandler(w, handler);
       }
       TouchMoveToMouseMoveHandler touchMoveToMouseMoveHandler = new TouchMoveToMouseMoveHandler(handler);
@@ -118,7 +182,7 @@ public abstract class TouchWidgetImpl {
 
     @Override
     public HandlerRegistration addTouchCancelHandler(Widget w, TouchCancelHandler handler) {
-      if (hasTouchSupport) {
+      if (hasTouchOrPointerSupport) {
         return delegate.addTouchCancelHandler(w, handler);
       }
       return new NoopHandlerRegistration();
@@ -126,7 +190,7 @@ public abstract class TouchWidgetImpl {
 
     @Override
     public HandlerRegistration addTouchEndHandler(Widget w, TouchEndHandler handler) {
-      if (hasTouchSupport) {
+      if (hasTouchOrPointerSupport) {
         return delegate.addTouchEndHandler(w, handler);
       }
       return w.addDomHandler(new TouchEndToMouseUpHandler(handler), MouseUpEvent.getType());
@@ -134,7 +198,7 @@ public abstract class TouchWidgetImpl {
 
     @Override
     public HandlerRegistration addTouchHandler(Widget w, TouchHandler handler) {
-      if (hasTouchSupport) {
+      if (hasTouchOrPointerSupport) {
         return delegate.addTouchHandler(w, handler);
       }
       HandlerRegistrationCollection hrc = new HandlerRegistrationCollection();

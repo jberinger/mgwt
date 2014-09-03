@@ -139,4 +139,9 @@ public interface OsDetection {
   boolean isIOS6();
 
   boolean isAndroid4_3_orLower();
+  /**
+   * Are we running on Windows Phone 8
+   * @return
+   */
+  boolean isWindowsPhone();
 }

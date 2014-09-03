@@ -105,6 +105,17 @@ public class MGWT {
   public static void applySettings(MGWTSettings settings) {
 
     Element head = getHead();
+    
+    ViewPort viewPort = settings.getViewPort();
+
+    if (viewPort != null) {
+      MetaElement fixViewPortElement = Document.get().createMetaElement();
+      fixViewPortElement.setName("viewport");
+      fixViewPortElement.setContent(viewPort.getContent());
+      head.appendChild(fixViewPortElement);
+
+    }
+    
     // You can disable injection of default resources
     // by putting this in your gwt.xml
     // <set-property name="mgwt.mainresource.inject" value="no" />
@@ -124,15 +135,6 @@ public class MGWT {
       head.appendChild(startUrlLinkElement);
     }
 
-    ViewPort viewPort = settings.getViewPort();
-
-    if (viewPort != null) {
-      MetaElement fixViewPortElement = Document.get().createMetaElement();
-      fixViewPortElement.setName("viewport");
-      fixViewPortElement.setContent(viewPort.getContent());
-      head.appendChild(fixViewPortElement);
-
-    }
 
     if (settings.isFullscreen()) {
       MetaElement fullScreenMetaTag = Document.get().createMetaElement();
@@ -149,12 +151,34 @@ public class MGWT {
       }
 
     }
+//    Window.alert("isWindowsPhone():"+MGWT.getOsDetection().isWindowsPhone());
+    if (MGWT.getOsDetection().isWindowsPhone())
+    {
+      MetaElement ieCompatible = Document.get().createMetaElement();
+      ieCompatible.setHttpEquiv("IE=edge");
+      
+      MetaElement tapHighlight = Document.get().createMetaElement();
+      tapHighlight.setName("msapplication-tap-highlight");
+      tapHighlight.setContent("no");
+      
+//      StyleElement styleElement = Document.get().createStyleElement();
+//      styleElement.setInnerText("@-ms-viewport {\n" + 
+//          "  width: device-width;\n" + 
+//          "}");
+
+      head.appendChild(tapHighlight);
+//      head.appendChild(styleElement);
+      head.appendChild(ieCompatible);
+    }
 
     scrollingDisabled = settings.isPreventScrolling();
     if (settings.isPreventScrolling() && getOsDetection().isIOs()) {
       BodyElement body = Document.get().getBody();
       setupPreventScrolling(body);
 
+    }
+    if (settings.isPreventScrolling() && getOsDetection().isWindowsPhone()) {
+      Document.get().getBody().setAttribute("style", "-ms-touch-action: none;");
     }
 
     if (settings.isDisablePhoneNumberDetection()) {

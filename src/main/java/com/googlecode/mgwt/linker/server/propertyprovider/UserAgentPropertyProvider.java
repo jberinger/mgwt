@@ -25,6 +25,10 @@ public class UserAgentPropertyProvider extends PropertyProviderBaseImpl {
     if (userAgent.contains("gecko")) {
       return "gecko1_8";
     }
+    
+//    if (userAgent.contains("msie 10")) {
+//      return "ie10";
+//    }
 
     throw new PropertyProviderException("Can not find user agent property for userAgent: '" + userAgent + "'");
 

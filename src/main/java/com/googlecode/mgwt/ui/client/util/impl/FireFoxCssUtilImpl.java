@@ -13,13 +13,13 @@ public class FireFoxCssUtilImpl implements CssUtilImpl {
 	public void translate(Element el, int x, int y) {
 		String cssText = null;
 		cssText = "translate( " + x + "px, " + y + "px )";
-		el.getStyle().setProperty("MozTransform", cssText);
+		el.getStyle().setProperty("transform", cssText);
 
 	}
 
 	@Override
 	public void setDelay(Element el, int milliseconds) {
-		el.getStyle().setProperty("MozTransitionDelay", milliseconds + "ms");
+		el.getStyle().setProperty("transitionDelay", milliseconds + "ms");
 
 	}
 
@@ -30,12 +30,12 @@ public class FireFoxCssUtilImpl implements CssUtilImpl {
 
 	@Override
 	public void setDuration(Element el, int time) {
-		el.getStyle().setProperty("MozTransitionDuration", time + "ms");
+		el.getStyle().setProperty("transitionDuration", time + "ms");
 	}
 
 	@Override
 	public void rotate(Element el, int degree) {
-		el.getStyle().setProperty("MozTransform", "rotate(" + degree + "deg)");
+		el.getStyle().setProperty("transform", "rotate(" + degree + "deg)");
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class FireFoxCssUtilImpl implements CssUtilImpl {
 
 	@Override
 	public String getTransformProperty() {
-		return "-moz-transform";
+		return "transform";
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class FireFoxCssUtilImpl implements CssUtilImpl {
 
 	@Override
 	public void resetTransform(Element element) {
-		element.getStyle().setProperty("MozTransform", "");
+		element.getStyle().setProperty("transform", "");
 
 	}
 
@@ -110,14 +110,14 @@ public class FireFoxCssUtilImpl implements CssUtilImpl {
 
 		cssText = "translate( " + x + "px, " + y + "px ) scale( + " + scale + ")";
 
-		el.getStyle().setProperty("MozTransform", cssText);
+		el.getStyle().setProperty("transform", cssText);
 
 	}
 
   @Override
   public void translatePercent(Element el, double x, double y) {
 
-    el.getStyle().setProperty("MozTransform", "translate( " + x + "%, " + y + "% )");
+    el.getStyle().setProperty("transform", "translate( " + x + "%, " + y + "% )");
 
   }
 

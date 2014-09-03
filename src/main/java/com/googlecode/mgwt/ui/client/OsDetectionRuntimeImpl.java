@@ -140,4 +140,13 @@ public class OsDetectionRuntimeImpl implements OsDetection {
 
     return false;
   }
+
+  @Override
+  public boolean isWindowsPhone() {
+    String userAgent = getUserAgent();
+    if (userAgent.contains("windows phone")) {
+      return true;
+    }
+    return false;
+  }
 }
