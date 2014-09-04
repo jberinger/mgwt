@@ -90,38 +90,53 @@ public abstract class TouchWidgetImpl {
 
     @Override
     public HandlerRegistration addTouchStartHandler(Widget w, TouchStartHandler handler) {
-//      return w.addBitlessDomHandler(new TouchStartToMsPointerDownHandler(handler), MsPointerDownEvent.getType());
-      return w.addDomHandler(handler, TouchStartEvent.getType());
+      if (w==null || w.getElement() == null) {
+        return null;
+      }
+      return w.addBitlessDomHandler(new TouchStartToMsPointerDownHandler(handler), MsPointerDownEvent.getType());
+//      return w.addDomHandler(handler, TouchStartEvent.getType());
     }
 
     
     
     @Override
     public HandlerRegistration addTouchMoveHandler(Widget w, TouchMoveHandler handler) {
-//      TouchMoveToMsPointerMoveHandler touchMoveToMsPointerMoveHandler = new TouchMoveToMsPointerMoveHandler(handler);
-//      HandlerRegistrationCollection handlerRegistrationCollection = new HandlerRegistrationCollection();
-//      handlerRegistrationCollection.addHandlerRegistration(w.addBitlessDomHandler(touchMoveToMsPointerMoveHandler, MsPointerDownEvent.getType()));
-//      handlerRegistrationCollection.addHandlerRegistration(w.addBitlessDomHandler(touchMoveToMsPointerMoveHandler, MsPointerUpEvent.getType()));
-//      handlerRegistrationCollection.addHandlerRegistration(w.addBitlessDomHandler(touchMoveToMsPointerMoveHandler, MsPointerMoveEvent.getType()));
-//      return handlerRegistrationCollection;
+      if (w==null || w.getElement() == null) {
+        return null;
+      }
+      TouchMoveToMsPointerMoveHandler touchMoveToMsPointerMoveHandler = new TouchMoveToMsPointerMoveHandler(handler);
+      HandlerRegistrationCollection handlerRegistrationCollection = new HandlerRegistrationCollection();
+      handlerRegistrationCollection.addHandlerRegistration(w.addBitlessDomHandler(touchMoveToMsPointerMoveHandler, MsPointerDownEvent.getType()));
+      handlerRegistrationCollection.addHandlerRegistration(w.addBitlessDomHandler(touchMoveToMsPointerMoveHandler, MsPointerUpEvent.getType()));
+      handlerRegistrationCollection.addHandlerRegistration(w.addBitlessDomHandler(touchMoveToMsPointerMoveHandler, MsPointerMoveEvent.getType()));
+      return handlerRegistrationCollection;
 ////      return w.addBitlessDomHandler(new TouchMoveToMsPointerMoveHandler(handler), MsPointerMoveEvent.getType());
       
-      return w.addDomHandler(handler, TouchMoveEvent.getType());
+//      return w.addDomHandler(handler, TouchMoveEvent.getType());
     }
 
     public HandlerRegistration addTouchCancelHandler(Widget w, TouchCancelHandler handler) {
-//      return w.addBitlessDomHandler(new TouchCancelToMsPointerCancelHandler(handler), MsPointerCancelEvent.getType());
-      return w.addDomHandler(handler, TouchCancelEvent.getType());
+      if (w==null || w.getElement() == null) {
+        return null;
+      }
+      return w.addBitlessDomHandler(new TouchCancelToMsPointerCancelHandler(handler), MsPointerCancelEvent.getType());
+//      return w.addDomHandler(handler, TouchCancelEvent.getType());
     }
     
     @Override
     public HandlerRegistration addTouchEndHandler(Widget w, TouchEndHandler handler) {
-//      return w.addBitlessDomHandler(new TouchEndToMsPointerUpHandler(handler), MsPointerUpEvent.getType());
-      return w.addDomHandler(handler, TouchEndEvent.getType());
+      if (w==null || w.getElement() == null) {
+        return null;
+      }
+      return w.addBitlessDomHandler(new TouchEndToMsPointerUpHandler(handler), MsPointerUpEvent.getType());
+//      return w.addDomHandler(handler, TouchEndEvent.getType());
     }
 
     @Override
     public HandlerRegistration addTouchHandler(Widget w, TouchHandler handler) {
+      if (w==null || w.getElement() == null) {
+        return null;
+      }
       HandlerRegistrationCollection hrc = new HandlerRegistrationCollection();
       hrc.addHandlerRegistration(addTouchStartHandler(w, handler));
       hrc.addHandlerRegistration(addTouchMoveHandler(w, handler));

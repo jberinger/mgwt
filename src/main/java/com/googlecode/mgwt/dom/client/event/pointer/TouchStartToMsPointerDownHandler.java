@@ -37,7 +37,6 @@ public class TouchStartToMsPointerDownHandler implements MsPointerDownHandler {
   /** {@inheritDoc} */
   @Override
   public void onPointerDown(MsPointerDownEvent event) {
-    Window.alert("onPointerDown");
     SimulatedTouchStartEvent simulatedTouchStartEvent = new SimulatedTouchStartEvent(event, false);
     handler.onTouchStart(simulatedTouchStartEvent);
   }

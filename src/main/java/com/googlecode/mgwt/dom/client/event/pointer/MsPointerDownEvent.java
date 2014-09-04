@@ -54,7 +54,6 @@ public class MsPointerDownEvent extends MsPointerEvent<MsPointerDownHandler> {
 
   @Override
   protected void dispatch(MsPointerDownHandler handler) {
-    Window.alert("dispatch MsPointerDownHandler");
     handler.onPointerDown(this);
   }
 

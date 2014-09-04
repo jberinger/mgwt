@@ -13,13 +13,14 @@
  */
 package com.googlecode.mgwt.ui.client.widget.button;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.TouchCancelEvent;
 import com.google.gwt.event.dom.client.TouchEndEvent;
 import com.google.gwt.event.dom.client.TouchMoveEvent;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.HasText;
-
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.dom.client.event.touch.TouchHandler;
@@ -44,53 +45,59 @@ public abstract class ButtonBase extends TouchWidget implements HasText {
   public ButtonBase(ButtonBaseAppearance appearance) {
     this.baseAppearance = appearance;
 
-    addTouchHandler(new TouchHandler() {
-
+    Scheduler.get().scheduleDeferred(new ScheduledCommand() {
       @Override
-      public void onTouchCancel(TouchCancelEvent event) {
-        event.stopPropagation();
-        event.preventDefault();
-        removeStyleName(ButtonBase.this.baseAppearance.css().active());
-        if (MGWT.getFormFactor().isDesktop()) {
-          DOM.releaseCapture(getElement());
-        }
-        active = false;
-      }
-
-      @Override
-      public void onTouchEnd(TouchEndEvent event) {
-        event.stopPropagation();
-        event.preventDefault();
-        removeStyleName(ButtonBase.this.baseAppearance.css().active());
-        if (MGWT.getFormFactor().isDesktop()) {
-          DOM.releaseCapture(getElement());
-        }
-        active = false;
-      }
-
-      @Override
-      public void onTouchMove(TouchMoveEvent event) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-
-      @Override
-      public void onTouchStart(TouchStartEvent event) {
-        event.stopPropagation();
-        event.preventDefault();
-        addStyleName(ButtonBase.this.baseAppearance.css().active());
-        if (MGWT.getFormFactor().isDesktop()) {
-          DOM.setCapture(getElement());
-        }
-        active = true;
-      }
-    });
-
-    addTapHandler(new TapHandler() {
-
-      @Override
-      public void onTap(TapEvent event) {
-        removeStyleName(ButtonBase.this.baseAppearance.css().active());
+      public void execute() {
+    
+        addTouchHandler(new TouchHandler() {
+    
+          @Override
+          public void onTouchCancel(TouchCancelEvent event) {
+            event.stopPropagation();
+            event.preventDefault();
+            removeStyleName(ButtonBase.this.baseAppearance.css().active());
+            if (MGWT.getFormFactor().isDesktop()) {
+              DOM.releaseCapture(getElement());
+            }
+            active = false;
+          }
+    
+          @Override
+          public void onTouchEnd(TouchEndEvent event) {
+            event.stopPropagation();
+            event.preventDefault();
+            removeStyleName(ButtonBase.this.baseAppearance.css().active());
+            if (MGWT.getFormFactor().isDesktop()) {
+              DOM.releaseCapture(getElement());
+            }
+            active = false;
+          }
+    
+          @Override
+          public void onTouchMove(TouchMoveEvent event) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+    
+          @Override
+          public void onTouchStart(TouchStartEvent event) {
+            event.stopPropagation();
+            event.preventDefault();
+            addStyleName(ButtonBase.this.baseAppearance.css().active());
+            if (MGWT.getFormFactor().isDesktop()) {
+              DOM.setCapture(getElement());
+            }
+            active = true;
+          }
+        });
+    
+        addTapHandler(new TapHandler() {
+    
+          @Override
+          public void onTap(TapEvent event) {
+            removeStyleName(ButtonBase.this.baseAppearance.css().active());
+          }
+        });
       }
     });
   }
