@@ -48,9 +48,9 @@
 
 @if user.agent gecko1_8 {
   .mgwt-OverlayMenu-nav {
-    -moz-transform-property: opacity;
+    transform-property: opacity;
   }
   .mgwt-OverlayMenu-main {
-    -moz-transform-property: left;
+    transform-property: left;
   }
 }

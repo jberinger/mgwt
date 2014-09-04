@@ -23,8 +23,8 @@
 
 @if user.agent gecko1_8 {
   .mgwt-ScrollPanel-container {
-    -moz-transition-property: literal('-moz-transform');
-    -moz-transition-timing-function: literal('cubic-bezier(0, 0, 0.25, 1)');
+    transition-property: literal('transform');
+    transition-timing-function: literal('cubic-bezier(0, 0, 0.25, 1)');
     vertical-align: top;
   }
 }
@@ -46,9 +46,9 @@
 
 @if user.agent gecko1_8 {
   .mgwt-Scrollbar {
-    -moz-transition-duration: 300ms;
-    -moz-transition-delay: 0ms;
-    -moz-transition-property: opacity;
+    transition-duration: 300ms;
+    transition-delay: 0ms;
+    transition-property: opacity;
   }
 }
 
@@ -88,11 +88,11 @@
 
 @if user.agent gecko1_8 {
   .mgwt-Scrollbar-Bar {
-    -moz-background-clip:padding-box;
-    -moz-box-sizing:border-box;
-    -moz-transition-property:literal('-webkit-transform');
-    -moz-transition-timing-function:cubic-bezier(0.33,0.66,0.66,1);
-    -moz-transform: translate('0,0');
-    -moz-transition-duration:0;
+    background-clip:padding-box;
+    box-sizing:border-box;
+    transition-property:literal('-webkit-transform');
+    transition-timing-function:cubic-bezier(0.33,0.66,0.66,1);
+    transform3d: translate(0,0,0);
+    transition-duration:0;
   }
 }

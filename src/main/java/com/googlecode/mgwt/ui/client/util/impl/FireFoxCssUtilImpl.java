@@ -12,7 +12,7 @@ public class FireFoxCssUtilImpl implements CssUtilImpl {
 	@Override
 	public void translate(Element el, int x, int y) {
 		String cssText = null;
-		cssText = "translate( " + x + "px, " + y + "px )";
+		cssText = "translate3d( " + x + "px, " + y + "px, 0px )";
 		el.getStyle().setProperty("transform", cssText);
 
 	}
@@ -66,11 +66,21 @@ public class FireFoxCssUtilImpl implements CssUtilImpl {
 	}
 
 	private native JsArrayInteger getPositionFromTransform(Element el)/*-{
-		var matrix = getComputedStyle(el, null)['MozTransform'].replace(
-				/[^0-9-.,]/g, '').split(',');
-		var x = matrix[4] * 1;
-		var y = matrix[5] * 1;
-		return [ x, y ];
+	  if (getComputedStyle(el, null)['transform'] == null) {
+	    return [ 0, 0 ];
+	  }
+	  var matrixString = getComputedStyle(el, null)['transform'];
+	  var matrix = getComputedStyle(el, null)['transform'].replace(
+        /[^0-9-.,]/g, '').split(',');
+	  if (matrixString.search("matrix3d") != -1) {
+	    var x = matrix[12] * 1;
+      var y = matrix[13] * 1;
+      return [ x, y ];
+	  } else {
+			var x = matrix[4] * 1;
+		  var y = matrix[5] * 1;
+		  return [ x, y ];
+		}
   }-*/;
 
 	@Override
@@ -91,17 +101,17 @@ public class FireFoxCssUtilImpl implements CssUtilImpl {
 
 	@Override
 	public native void setTransistionProperty(Element element, String string) /*-{
-		element.mozTransitionProperty = string;
+		element.transitionProperty = string;
   }-*/;
 
 	@Override
 	public native void setTransFormOrigin(Element el, int x, int y) /*-{
-		el.mozTransformOrigin = x + " " + y;
+		el.transformOrigin = x + " " + y;
   }-*/;
 
 	@Override
 	public native void setTransistionTimingFunction(Element element, String string) /*-{
-		el.mozTransitionTimingFunction = string;
+		el.transitionTimingFunction = string;
   }-*/;
 
 	@Override
@@ -117,7 +127,7 @@ public class FireFoxCssUtilImpl implements CssUtilImpl {
   @Override
   public void translatePercent(Element el, double x, double y) {
 
-    el.getStyle().setProperty("transform", "translate( " + x + "%, " + y + "% )");
+    el.getStyle().setProperty("transform", "translate3d( " + x + "%, " + y + "% , 0%)");
 
   }
 

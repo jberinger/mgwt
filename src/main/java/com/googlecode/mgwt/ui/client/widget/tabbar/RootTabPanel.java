@@ -76,7 +76,7 @@ public class RootTabPanel extends Composite implements HasSelectionHandlers<Inte
     container.add(animatableDisplayContainer, 1);
     tabBar = new TabPanel.TabBar();
     tabBar.getElement().getStyle().setProperty("WebkitTransformProperty", "opacity");
-    tabBar.getElement().getStyle().setProperty("MozTransformProperty", "opacity");
+    tabBar.getElement().getStyle().setProperty("TransformProperty", "opacity");
     container.add(tabBar);
   }
 

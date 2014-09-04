@@ -43,8 +43,8 @@
 
 @if user.agent gecko1_8 {
   .mgwt-CheckBox-middle {
-    -moz-transition: all 0.1s ease-in-out;
-    -moz-border-radius: 6px;
+    transition: all 0.1s ease-in-out;
+    border-radius: 6px;
   }
 }
 
@@ -87,7 +87,7 @@
 
 @if user.agent gecko1_8 {
   .mgwt-CheckBox-on {
-    -moz-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
   }
 }
 
@@ -110,7 +110,7 @@
 
 @if user.agent gecko1_8 {
   .mgwt-CheckBox-off {
-    -moz-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
   }
 }
 
@@ -144,22 +144,22 @@
     background-color: #fe9c12;
   }
   .mgwt-CheckBox-notchecked .mgwt-CheckBox-middle {
-    -moz-transform: translate(-54px,0);
+    transform: translate3d(-54px,0,0);
   }
   .mgwt-CheckBox-checked .mgwt-CheckBox-middle {
-    -moz-transform: translate(0px,0);
+    transform: translate3d(0px,0,0);
   }
   .mgwt-CheckBox-notchecked .mgwt-CheckBox-off {
-    -moz-transform: translate(-54px,0);
+    transform: translate3d(-54px,0,0);
   }
   .mgwt-CheckBox-checked .mgwt-CheckBox-off {
-    -moz-transform: translate(0px,0);
+    transform: translate3d(0px,0,0);
   }
   .mgwt-CheckBox-notchecked .mgwt-CheckBox-on {
-    -moz-transform: translate(-62px,0);
+    transform: translate3d(-62px,0,0);
   }
   .mgwt-CheckBox-checked .mgwt-CheckBox-on {
-    -moz-transform: translate(0px,0);
+    transform: translate3d(0px,0,0);
   }
 }
 
