@@ -80,6 +80,7 @@ public class FireFoxCssUtilImpl implements CssUtilImpl {
 			var x = matrix[4] * 1;
 		  var y = matrix[5] * 1;
 		  return [ x, y ];
+		  
 		}
   }-*/;
 
