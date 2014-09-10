@@ -78,7 +78,7 @@ public class OsDetectionRuntimeImpl implements OsDetection {
 
   @Override
   public boolean isPhone() {
-    return isIPhone() || isRetina() || isAndroidPhone();
+    return isIPhone() || isRetina() || isAndroidPhone() || isWindowsPhone();
   }
 
   @Override
