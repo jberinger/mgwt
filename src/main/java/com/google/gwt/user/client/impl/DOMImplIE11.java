@@ -19,7 +19,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 
 
 /**
- * IE10 implementation of {@link com.google.gwt.user.client.impl.DOMImplStandard}.
+ * IE11 implementation of {@link com.google.gwt.user.client.impl.DOMImplStandard}.
  */
 public class DOMImplIE11 extends DOMImplMozilla {
   

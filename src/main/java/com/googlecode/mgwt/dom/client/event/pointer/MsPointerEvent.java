@@ -24,12 +24,12 @@ import com.google.gwt.event.shared.EventHandler;
  */
 public abstract class MsPointerEvent<H extends EventHandler> extends MouseEvent<H> {
 
-  public static final String MSPOINTERDOWN = "pointerdown";
-  public static final String MSPOINTERMOVE = "pointermove";
-  public static final String MSPOINTEROUT = "pointerout";
-  public static final String MSPOINTEROVER = "pointerover";
-  public static final String MSPOINTERUP = "pointerup";
-  public static final String MSPOINTERCANCEL = "pointercancel";
+  public static String MSPOINTERDOWN = "pointerdown";
+  public static String MSPOINTERMOVE = "pointermove";
+  public static String MSPOINTEROUT = "pointerout";
+  public static String MSPOINTEROVER = "pointerover";
+  public static String MSPOINTERUP = "pointerup";
+  public static String MSPOINTERCANCEL = "pointercancel";
 
   public final native int getPointerId() /*-{
     var e = this.@com.google.gwt.event.dom.client.DomEvent::nativeEvent;

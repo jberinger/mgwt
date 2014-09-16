@@ -78,6 +78,12 @@
         <when-type-is class="com.google.gwt.user.client.impl.DOMImpl"/>
         <all>
             <when-property-is name="user.agent" value="gecko1_8"/>
+        </all>
+    </replace-with>
+    
+    <replace-with class="com.google.gwt.user.client.impl.DOMImplIE10">
+        <when-type-is class="com.google.gwt.user.client.impl.DOMImpl"/>
+        <all>
             <when-property-is name="user.agent" value="ie10"/>
         </all>
     </replace-with>
