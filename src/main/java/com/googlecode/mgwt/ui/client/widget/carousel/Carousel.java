@@ -261,9 +261,9 @@ public class Carousel extends Composite implements HasWidgets, HasSelectionHandl
 
       @Override
       public void onScrollMove(ScrollMoveEvent event) {
-//        TouchMoveEvent moveEvent = event.getEvent();
-//        moveEvent.stopPropagation();
-//        moveEvent.preventDefault();
+        TouchMoveEvent moveEvent = event.getEvent();
+        moveEvent.stopPropagation();
+        moveEvent.preventDefault();
       }
     });
 

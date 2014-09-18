@@ -173,8 +173,8 @@ public class MGWT {
 
     scrollingDisabled = settings.isPreventScrolling();
     if (settings.isPreventScrolling() && getOsDetection().isIOs()) {
-//      BodyElement body = Document.get().getBody();
-//      setupPreventScrolling(body);
+      BodyElement body = Document.get().getBody();
+      setupPreventScrolling(body);
 
     }
     if (settings.isPreventScrolling() && getOsDetection().isWindowsPhone()) {
