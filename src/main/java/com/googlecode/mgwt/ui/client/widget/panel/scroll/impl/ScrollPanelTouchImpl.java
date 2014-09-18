@@ -664,9 +664,9 @@ public class ScrollPanelTouchImpl extends ScrollPanelImpl {
 
   private void move(TouchMoveEvent event) {
     // old android needs to prevent default on move
-    if (MGWT.getOsDetection().isAndroid()) {
-      event.preventDefault();
-    }
+//    if (MGWT.getOsDetection().isAndroid()) {
+//      event.preventDefault();
+//    }
 
     JsArray<Touch> touches = event.getTouches();
     int deltaX = touches.get(0).getPageX() - this.pointX;
