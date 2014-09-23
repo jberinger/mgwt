@@ -20,11 +20,11 @@ import com.google.gwt.event.dom.client.TouchEndEvent;
 import com.google.gwt.event.dom.client.TouchMoveEvent;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.shared.HasHandlers;
-
 import com.googlecode.mgwt.dom.client.event.touch.TouchCopy;
 import com.googlecode.mgwt.dom.client.event.touch.TouchHandler;
 import com.googlecode.mgwt.dom.client.recognizer.EventPropagator;
 import com.googlecode.mgwt.dom.client.recognizer.swipe.SwipeEvent.DIRECTION;
+import com.googlecode.mgwt.ui.client.MGWT;
 
 public class SwipeRecognizer implements TouchHandler {
 
@@ -53,6 +53,8 @@ public class SwipeRecognizer implements TouchHandler {
   private int x;
 
   private int y;
+
+  private boolean preventMove;
 
   /**
    * construct a swipe recognizer
@@ -91,6 +93,8 @@ public class SwipeRecognizer implements TouchHandler {
     if (threshold <= 0) {
       throw new IllegalArgumentException("threshold > 0");
     }
+    
+    this.preventMove = MGWT.getOsDetection().isAndroid();
 
     this.source = source;
     this.minDistance = minDistance;
@@ -138,6 +142,10 @@ public class SwipeRecognizer implements TouchHandler {
         // log(" X: " + touch.getPageX() + " old: " + touchStart.getPageX() + " test: " + x);
 
         if (Math.abs(touch.getPageX() - x) >= threshold) {
+          
+          if (preventMove) {
+            event.preventDefault();
+          }
           state = State.FOUND_DIRECTION;
 
           direction = touch.getPageX() - x > 0 ? DIRECTION.LEFT_TO_RIGHT : DIRECTION.RIGHT_TO_LEFT;
@@ -149,6 +157,9 @@ public class SwipeRecognizer implements TouchHandler {
 
         } else {
           if (Math.abs(touch.getPageY() - y) >= threshold) {
+            if (preventMove) {
+              event.preventDefault();
+            }
             state = State.FOUND_DIRECTION;
 
             direction = touch.getPageY() - y > 0 ? DIRECTION.TOP_TO_BOTTOM : DIRECTION.BOTTOM_TO_TOP;
@@ -168,6 +179,9 @@ public class SwipeRecognizer implements TouchHandler {
         switch (direction) {
           case TOP_TO_BOTTOM:
           case BOTTOM_TO_TOP:
+            if (preventMove) {
+              event.preventDefault();
+            }
             lastDistance = Math.abs(touch.getPageY() - y);
             getEventPropagator().fireEvent(
                 source,
@@ -177,6 +191,9 @@ public class SwipeRecognizer implements TouchHandler {
 
           case LEFT_TO_RIGHT:
           case RIGHT_TO_LEFT:
+            if (preventMove) {
+              event.preventDefault();
+            }
             lastDistance = Math.abs(touch.getPageX() - x);
             getEventPropagator().fireEvent(
                 source,
