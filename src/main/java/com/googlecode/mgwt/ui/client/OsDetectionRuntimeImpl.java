@@ -78,11 +78,15 @@ public class OsDetectionRuntimeImpl implements OsDetection {
 
   @Override
   public boolean isPhone() {
-    return isIPhone() || isRetina() || isAndroidPhone() || isWindowsPhone();
+    return isIPhone() || isRetina() || isAndroidPhone() || isWindowsPhone() || isBlackBerry();
   }
 
   @Override
   public boolean isBlackBerry() {
+    String userAgent = getUserAgent();
+    if (userAgent.contains("bb10")) {
+      return true;
+    }
     return false;
   }
 
@@ -140,11 +144,11 @@ public class OsDetectionRuntimeImpl implements OsDetection {
 
     return false;
   }
-
+  
   @Override
   public boolean isWindowsPhone() {
     String userAgent = getUserAgent();
-    if (userAgent.contains("windows phone")) {
+    if (userAgent.contains("windows phone 8")) {
       return true;
     }
     return false;
