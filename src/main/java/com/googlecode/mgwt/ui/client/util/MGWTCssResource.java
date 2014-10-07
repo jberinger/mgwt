@@ -17,7 +17,6 @@ package com.googlecode.mgwt.ui.client.util;
 
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.ext.ResourceGeneratorType;
-import com.googlecode.mgwt.ui.server.util.MGWTCssResourceGenerator;
 
 @ResourceGeneratorType(MGWTCssResourceGenerator.class)
 public interface MGWTCssResource extends CssResource {
