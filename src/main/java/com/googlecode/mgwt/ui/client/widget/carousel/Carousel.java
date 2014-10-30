@@ -385,7 +385,9 @@ public class Carousel extends Composite implements HasWidgets, HasSelectionHandl
 
           @Override
           public void onScrollRefresh(ScrollRefreshEvent event) {
-            refreshHandler.removeHandler();
+            if (refreshHandler != null) {
+              refreshHandler.removeHandler();
+            }
             refreshHandler = null;
             LightArrayInt pagesX = scrollPanel.getPagesX();
             if (currentPage < 0) {
