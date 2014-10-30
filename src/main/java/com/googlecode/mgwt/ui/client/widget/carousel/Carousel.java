@@ -118,8 +118,10 @@ public class Carousel extends Composite implements HasWidgets, HasSelectionHandl
     public void setHandleTapEvent(boolean handleTapEvent) {
       if (this.handleTapEvent != handleTapEvent) {
         this.handleTapEvent = handleTapEvent;
-        for (CarouselIndicator indicator : indicators) {
-          indicator.setHandleTapEvent(handleTapEvent);
+        if (indicators != null) {
+          for (CarouselIndicator indicator : indicators) {
+            indicator.setHandleTapEvent(handleTapEvent);
+          }
         }
       }
     }
@@ -131,17 +133,16 @@ public class Carousel extends Composite implements HasWidgets, HasSelectionHandl
     }
 
     public void setSelectedIndex(int index) {
-      if (indicators.isEmpty()) {
+      if (indicators == null || indicators.isEmpty()) {
         selectedIndex = -1;
         return;
       }
-      if (selectedIndex != -1) {
+      if (selectedIndex >= 0 && selectedIndex< indicators.size()) {
         indicators.get(selectedIndex).setActive(false);
       }
       selectedIndex = index;
-      if (selectedIndex != -1) {
+      if (selectedIndex >= 0 && selectedIndex < indicators.size()) {
         indicators.get(selectedIndex).setActive(true);
-
       }
     }
   }
