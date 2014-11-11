@@ -110,6 +110,8 @@ public class ImageConverter {
       throw new IllegalArgumentException();
     }
 
+    color = maybeExpandColor(color);
+
     int hexColor = Integer.parseInt(color.substring(1), 16);
 
     int red = hexColor >> 16 & 0xFF;
@@ -155,4 +157,21 @@ public class ImageConverter {
     img.src = dataUrl;
     return img;
   }-*/;
+
+  private String maybeExpandColor(String color) {
+
+    if (color.length() != 4) {
+      return color;
+    }
+
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append("#");
+    stringBuilder.append(color.charAt(1));
+    stringBuilder.append(color.charAt(1));
+    stringBuilder.append(color.charAt(2));
+    stringBuilder.append(color.charAt(2));
+    stringBuilder.append(color.charAt(3));
+    stringBuilder.append(color.charAt(3));
+    return stringBuilder.toString();
+  }
 }
